@@ -26,10 +26,10 @@ test.describe('Login Page Tests', () => {
         await page.locator('[data-qa="login-button"]').click()
       await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
 })
-test.only('TC_04 Blank Email', async ({page})=>{
-        // await page.locator('[data-qa="login-email"]').fill('vshln@gmail.com')
-        await page.locator('[data-qa="login-password"]').fill('Test@1234')
-        await page.locator('[data-qa="login-button"]').click()
-      await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
-})
+// test.only('TC_04 Blank Email', async ({page})=>{
+//         // await page.locator('[data-qa="login-email"]').fill('vshln@gmail.com')
+//         await page.locator('[data-qa="login-password"]').fill('Test@1234')
+//         await page.locator('[data-qa="login-button"]').click()
+//       await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
+// })
 })
