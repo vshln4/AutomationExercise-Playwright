@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+
 test.describe('Login Page Tests', () => {
 
   test.beforeEach(async ({ page }) => {
@@ -20,16 +21,22 @@ test.describe('Login Page Tests', () => {
         await page.locator('[data-qa="login-button"]').click()
       await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
 })
-     test.only('TC_03 Wrong Email', async ({page})=>{
+     test('TC_03 Wrong Email', async ({page})=>{
         await page.locator('[data-qa="login-email"]').fill('vshln@gmail.com')
         await page.locator('[data-qa="login-password"]').fill('Test@1234')
         await page.locator('[data-qa="login-button"]').click()
       await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
 })
-// test.only('TC_04 Blank Email', async ({page})=>{
-//         // await page.locator('[data-qa="login-email"]').fill('vshln@gmail.com')
-//         await page.locator('[data-qa="login-password"]').fill('Test@1234')
-//         await page.locator('[data-qa="login-button"]').click()
-//       await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
-// })
+test('TC_04 Blank Email', async ({page})=>{
+        await page.locator('[data-qa="login-email"]').fill('')
+        await page.locator('[data-qa="login-password"]').fill('Test@1234')
+        await page.locator('[data-qa="login-button"]').click()
+      await expect (page).toHaveURL('https://automationexercise.com/login')
+})
+test.only('TC_05 Blank Password', async ({page})=>{
+        await page.locator('[data-qa="login-email"]').fill('vshln4@gmail.com')
+        await page.locator('[data-qa="login-password"]').fill('')
+        await page.locator('[data-qa="login-button"]').click()
+      await expect (page).toHaveURL('https://automationexercise.com/login')
+})
 })
