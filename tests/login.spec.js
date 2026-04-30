@@ -33,7 +33,7 @@ test('TC_04 Blank Email', async ({page})=>{
         await page.locator('[data-qa="login-button"]').click()
       await expect (page).toHaveURL('https://automationexercise.com/login')
 })
-test.only('TC_05 Blank Password', async ({page})=>{
+test('TC_05 Blank Password', async ({page})=>{
         await page.locator('[data-qa="login-email"]').fill('vshln4@gmail.com')
         await page.locator('[data-qa="login-password"]').fill('')
         await page.locator('[data-qa="login-button"]').click()
