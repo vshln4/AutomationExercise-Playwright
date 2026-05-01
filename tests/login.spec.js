@@ -1,42 +1,37 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/loginPage.js'
 
 
 test.describe('Login Page Tests', () => {
+       let loginPage
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('https://automationexercise.com/login');
+  loginPage =new LoginPage(page)
+    await loginPage.goto();
   });
 
     test('TC_01 Valid login',async ({page}) =>{
-    await page.getByRole('link',{name :  'Signup / Login'}).click()
+      await loginPage.login('vshln4@gmail.com', 'Test@1234')
+      await expect(loginPage.urlLink).toBeVisible()
 
-    await page.locator('[data-qa="login-email"]').fill('vshln4@gmail.com')
-    await page.locator('[data-qa="login-password"]').fill('Test@1234')
-    await page.locator('[data-qa="login-button"]').click()
-    await expect(page.getByRole('link',{name:'logout'})).toBeVisible()
 })
     test('TC_02 Wrong Password', async ({page})=>{
-        await page.locator('[data-qa="login-email"]').fill('vshln4@gmail.com')
-        await page.locator('[data-qa="login-password"]').fill('Test@1')
-        await page.locator('[data-qa="login-button"]').click()
-      await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
+      await loginPage.login('vshln4@gmail.com', 'Test@1')
+      await expect(loginPage.errorMessage).toBeVisible()
+
 })
      test('TC_03 Wrong Email', async ({page})=>{
-        await page.locator('[data-qa="login-email"]').fill('vshln@gmail.com')
-        await page.locator('[data-qa="login-password"]').fill('Test@1234')
-        await page.locator('[data-qa="login-button"]').click()
-      await expect (page.getByText('Your email or password is incorrect!')).toBeVisible()
+      await loginPage.login('vshl4@gmail.com', 'Test@1234')
+      await expect(loginPage.errorMessage).toBeVisible()
+
 })
 test('TC_04 Blank Email', async ({page})=>{
-        await page.locator('[data-qa="login-email"]').fill('')
-        await page.locator('[data-qa="login-password"]').fill('Test@1234')
-        await page.locator('[data-qa="login-button"]').click()
-      await expect (page).toHaveURL('https://automationexercise.com/login')
+  await loginPage.login('','Test@1234')
+  await expect(page).toHaveURL('https://automationexercise.com/login')
+
 })
 test('TC_05 Blank Password', async ({page})=>{
-        await page.locator('[data-qa="login-email"]').fill('vshln4@gmail.com')
-        await page.locator('[data-qa="login-password"]').fill('')
-        await page.locator('[data-qa="login-button"]').click()
-      await expect (page).toHaveURL('https://automationexercise.com/login')
+    await loginPage.login('vshln4@gmail.com','')
+  await expect(page).toHaveURL('https://automationexercise.com/login')
 })
 })
